@@ -13,7 +13,7 @@ pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_t
 mp_drawing = mp.solutions.drawing_utils
 
 # Define PPE categories
-PPE_CATEGORIES = ['Gloves', 'Mask', 'Goggles', 'lab coat', 'coverall','no mask','no labcoat','no goggles']
+PPE_CATEGORIES = ['Gloves', 'Mask', 'Goggles', 'lab coat', 'coverall']
 
 # Function to calculate distance between two points
 def calculate_distance(a, b):
@@ -96,24 +96,10 @@ if uploaded_file is not None:
     # Display video and process frames
     stframe = st.empty()
 
-    # Frame skipping and downscaling
-    frame_skip = 2  # Process every 2nd frame
-    scale_percent = 50  # Reduce frame size to 50%
-    frame_count = 0
-
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
-
-        frame_count += 1
-        if frame_count % frame_skip != 0:
-            continue  # Skip this frame
-
-        # Downscale the frame
-        width = int(frame.shape[1] * scale_percent / 100)
-        height = int(frame.shape[0] * scale_percent / 100)
-        frame = cv2.resize(frame, (width, height))
 
         # Convert frame to RGB
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -160,3 +146,4 @@ if uploaded_file is not None:
         stframe.image(frame, channels="BGR", use_column_width=True)
 
     cap.release()
+           
